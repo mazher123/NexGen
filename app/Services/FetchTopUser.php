@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+
 use App\Jobs\TopUserFinder;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Repositories\TopupRepository;
@@ -19,10 +20,15 @@ class FetchTopUser
         $this->topTopUp = $topTopUp;
     }
 
+    public function getTopUser()
+    {
+        $data = $this->topTopUp->getTopUsers();
+        return $data;
+    }
 
     public function topTopUpUsers()
     {
-       $data = $this->topUp->fetchTopUser();       
+        $data = $this->topUp->fetchTopUser();
         return $data;
     }
 
@@ -40,9 +46,9 @@ class FetchTopUser
         return $data;
     }
 
-    public function searchUserName($value)
+    public function searchUserName($name, $email, $minuser, $maxuser)
     {
-        $data = $this->topTopUp->searchTopUserName($value);
+        $data = $this->topTopUp->searchTopUserName($name, $email, $minuser, $maxuser);
         return $data;
     }
 }

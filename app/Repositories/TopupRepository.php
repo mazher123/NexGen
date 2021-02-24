@@ -18,7 +18,14 @@ class TopupRepository
     public function fetchTopUser()
     {
         $startDate = $this->dateTimeInfo();
-        $data = $this->topUp->topUsers($startDate);
+        $data = DB::table('topups')
+            ->selectRaw('topups.*, COUNT(topups.user_id) AS count')
+            ->groupBy('topups.user_id')
+            ->orderBy('count', 'desc')
+            ->where('topups.created_at', $startDate)
+            ->limit(10)
+            ->get();
+
         return  $data;
     }
 

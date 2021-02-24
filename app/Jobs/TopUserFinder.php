@@ -11,12 +11,13 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Traits\Scheduleable;
+use App\Services\FetchTopUser;
 
 class TopUserFinder extends Job implements SelfHandling, ShouldQueue
 {
     use DispatchesJobs;
     use InteractsWithQueue, SerializesModels;
-    use Scheduleable;
+    
 
 
     /**
@@ -25,10 +26,11 @@ class TopUserFinder extends Job implements SelfHandling, ShouldQueue
      * @return void
      */
 
+    protected $fetchService;
 
-
-    public function __construct()
+    public function __construct(FetchTopUser $fetchService)
     {
+        $this->fetchService = $fetchService;
     }
 
     /**
@@ -38,6 +40,7 @@ class TopUserFinder extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
-        $data = app()->call(TopupController::class . '@' . 'getTopUser');
+        $data = $this->fetchService->userInformation();
+       // $data = app()->call(TopupController::class . '@' . 'getTopUser');
     }
 }

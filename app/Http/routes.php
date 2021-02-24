@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', 'TopupController@index');
-Route::get('/fetch-user', 'TopupController@fetchData')->name('fetchUser');
-Route::post('/fetch-user', 'TopupController@search')->name('search');
+//Route::get('/', 'TopupController@index');
+Route::get('/', 'TopupController@fetchData')->name('fetchUser');
+Route::get('/fetch-user', 'TopupController@search')->name('search');
